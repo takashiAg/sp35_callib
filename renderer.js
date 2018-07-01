@@ -4,6 +4,8 @@
 
 const serialPort = require('serialport');
 var SP;
+var response = "";
+var serial_histry = [];
 
 window.onload = function () {
     //setTimeout(make_serial_list(),1);
@@ -24,7 +26,14 @@ function bind_button() {
     $("#add_row").on("click", function () {
         add_row();
     })
-
+    $(".delete_colmn").on("click", function () {
+        $(this).parent().remove();
+    })
+    $(".close").each(function () {
+        $(this).on("click", function () {
+            $("#exampleModalCenter").css("display", "none").removeClass("in")
+        })
+    })
 }
 
 function make_serial_list() {
@@ -101,6 +110,45 @@ function send_message(message) {
 
 function recieved_message(res) {
     console.log('data received: ' + res);
+
+    response += res;
+    var Lines = response.split("\n")
+    var Line_length = Lines.length;
+    response = Lines[Line_length - 1];
+    Lines.pop();
+    if (Line_length > 1) {
+        Lines.forEach(function (element) {
+            //console.log(element.length, element);
+            var param_last_sign = "that was params"
+            //console.log(param_last_sign.length, param_last_sign);
+            if (element == param_last_sign) {
+                var parameter = serial_histry[serial_histry.length - 1]
+                console.log(parameter)
+                var parameter_array = eval(parameter);
+                $("#device").empty();
+                parameter_array.forEach(function (element) {
+                    if (!(element[0] == "0" && element[1] == "0" && element[2] == "0" && element[3] == "0" && element[4] == "0" && element[5] == "0")) {
+                        $("#device").append(
+                            "<tr>" +
+                            "<td>" + element[0] + "</td>" +
+                            "<td>" + element[1] + "</td>" +
+                            "<td>" + element[2] + "</td>" +
+                            "<td>" + element[3] + "</td>" +
+                            "<td>" + element[4] + "</td>" +
+                            "<td>" + element[5] + "</td>" +
+                            "</tr>");
+                    }
+                });
+                setTimeout(function () {
+                    $("#exampleModalCenter").css("display", "block").addClass("in")
+                }, 1)
+                serial_histry = []
+            }
+            serial_histry.push(element);
+        })
+    }
+    //console.log(serial_histry);
+
     /*
     var dt = new Date()
     var com = "<tr>\n" +
@@ -145,6 +193,7 @@ function send_data_to_device(messages) {
     var length = messages.length;
     var counter = 0;
 
+    //console.log(messages)
     /* 一定時間ごとに実行する関数
      * node_serialがうまく実行できない時があるので。
      */
@@ -154,7 +203,7 @@ function send_data_to_device(messages) {
             console.log(messages[counter]);
 
             //デバイスに送信
-            send_message("start"+messages[counter++]+"\n\n");
+            send_message("start" + messages[counter++] + "\n\n");
 
         } else {
 
@@ -171,7 +220,7 @@ function send_data_to_device(messages) {
 
 function multi_send_message(messages) {
     messages.forEach(function (message) {
-        send_message("start"+message+"\n");
+        send_message("start" + message + "\n");
     });
     //endflagを送信
     send_message("endend");
@@ -245,6 +294,11 @@ function add_row() {
         "<td><input class=\"clear_box\"></td>" +
         "<td><input class=\"clear_box\"></td>" +
         "<td><input class=\"clear_box\"></td>" +
+        "<td class=\"delete_colmn\" ><span class=\"glyphicon glyphicon-minus\"></span></td>" +
         "</tr>"
     $("#comport").append(row);
+    $(".delete_colmn").off("click");
+    $(".delete_colmn").on("click", function () {
+        $(this).parent().remove();
+    })
 }

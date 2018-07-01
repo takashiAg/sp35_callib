@@ -83,38 +83,42 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>開始時間</th>
+                        <th>開始時間[分]</th>
                         <th>R時間[mS]</th>
                         <th>R-R時間[mS]</th>
                         <th>心拍の強さ[-]</th>
-                        <th>呼吸の周期[mS]</th>
+                        <th>呼吸周期[mS]</th>
                         <th>呼吸の強さ[-]</th>
+                        <th>削除</th>
                     </tr>
                     </thead>
                     <tbody id="comport">
                     <tr>
                         <td><input class="clear_box" value="0"></td>
-                        <td><input class="clear_box" value="300"></td>
+                        <td><input class="clear_box" value="30"></td>
                         <td><input class="clear_box" value="1000"></td>
-                        <td><input class="clear_box" value="50"></td>
+                        <td><input class="clear_box" value="5"></td>
                         <td><input class="clear_box" value="4000"></td>
-                        <td><input class="clear_box" value="200"></td>
+                        <td><input class="clear_box" value="100"></td>
+                        <td class="delete_colmn"><span class="glyphicon glyphicon-minus"></span></td>
                     </tr>
                     <tr>
                         <td><input class="clear_box" value="60"></td>
-                        <td><input class="clear_box" value="300"></td>
+                        <td><input class="clear_box" value="30"></td>
                         <td><input class="clear_box" value="1000"></td>
-                        <td><input class="clear_box" value="50"></td>
+                        <td><input class="clear_box" value="5"></td>
                         <td><input class="clear_box" value="4000"></td>
-                        <td><input class="clear_box" value="150"></td>
+                        <td><input class="clear_box" value="100"></td>
+                        <td class="delete_colmn"><span class="glyphicon glyphicon-minus"></span></td>
                     </tr>
                     <tr>
-                        <td><input class="clear_box" value="70"></td>
-                        <td><input class="clear_box" value="300"></td>
+                        <td><input class="clear_box" value="120"></td>
+                        <td><input class="clear_box" value="30"></td>
                         <td><input class="clear_box" value="1000"></td>
-                        <td><input class="clear_box" value="50"></td>
-                        <td><input class="clear_box" value="3600"></td>
-                        <td><input class="clear_box" value="150"></td>
+                        <td><input class="clear_box" value="5"></td>
+                        <td><input class="clear_box" value="4000"></td>
+                        <td><input class="clear_box" value="100"></td>
+                        <td class="delete_colmn"><span class="glyphicon glyphicon-minus"></span></td>
                     </tr>
                     </tbody>
                 </table>
@@ -129,7 +133,7 @@
                 <button id="save" class="btn btn-primary btn-block">ファイルに保存</button>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                <span class="btn btn-primary btn-block"onclick="$('input[id=file_open]').click();">ファイルから読み込み</span>
+                <span class="btn btn-primary btn-block" onclick="$('input[id=file_open]').click();">ファイルから読み込み</span>
                 <input type="file" id="file_open" name="files[]" style="display:none" multiple/>
             </div>
 
@@ -142,6 +146,48 @@
         </div>
     </div>
 </section>
+
+
+<div class="fade">
+    <!-- Button trigger modal -->
+    <button id="modal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        Launch demo modal
+    </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">現在構成機に設定されているパラメータ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>開始時間[分]</th>
+                        <th>R時間[mS]</th>
+                        <th>R-R時間[mS]</th>
+                        <th>心拍の強さ[-]</th>
+                        <th>呼吸周期[mS]</th>
+                        <th>呼吸の強さ[-]</th>
+                    </tr>
+                    </thead>
+                    <tbody id="device">
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary close">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- FOOTER -->
 

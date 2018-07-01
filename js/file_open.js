@@ -48,8 +48,14 @@ function make_table_from_data(data) {
             value.forEach(function (column) {
                 row += "<td><input class=\"clear_box\" value=\"" + column + "\"></td>";
             });
+            row += "<td class=\"delete_colmn\" ><span class=\"glyphicon glyphicon-minus\"></span></td>";
             row += "</tr>";
             $("#comport").append(row);
+
+            $(".delete_colmn").off("click");
+            $(".delete_colmn").on("click", function () {
+                $(this).parent().remove();
+            })
         }
     });
 }
@@ -84,7 +90,7 @@ function save_file() {
             writeFile(savedFiles, converted_data);
             console.log(savedFiles);
         });
-    },1)
+    }, 1)
 
     console.log(converted_data);
 }
